@@ -71,7 +71,7 @@ const res = require('express/lib/response');
                
     }) 
 
-    //Deletar um produto e seus estoque (Deleta o prduto, mas não o estoque)
+    //Deletar um produto e seus estoque
     routes.delete('/deletarprodutoeestoque', async (req,res) => {
 
         const {id} = req.body       
@@ -83,12 +83,12 @@ const res = require('express/lib/response');
         try {
 
             const deletaProduto = await Produto.findByPk(id);
-            const deletaEstoque = await Estoque.findAll({where: { idProduto: id }})
+            const deletaEstoque = await Estoque.findOne({where: { idProduto: id }})
            
             console.log(deletaEstoque)
             await deletaProduto.destroy();
             await deletaEstoque.destroy();
-           
+            
             
                       
             res.status(201).json({mensagem: 'Produto Deletado'})
@@ -253,7 +253,6 @@ const res = require('express/lib/response');
         try {
            
         const listaEstoque = await Estoque.findAll({ where: { idProduto: id,}})
-
         return res.json({listaEstoque})
 
         } catch (error) {
@@ -263,6 +262,30 @@ const res = require('express/lib/response');
     })
 
     //Editar estoque para produto pelo id
+    routes.get('/editarestoqueparaproduto', async (req,res) => {
+       
+        const {id} = req.body.idProduto
+        const {quantidade, reserva, status} = req.body.estoque
+
+        if (!id) {
+            res.status(422).json({error: 'o id é obrigatório'})
+        }
+                     
+        try {
+         
+        const listaEstoque = await Estoque.findAll({ where: { idProduto: id,}})
+        
+        listaEstoque.quantidade = quantidade,
+        listaEstoque.reserva = reserva,
+        listaEstoque.status = status
+
+        await listaEstoque.save();
+        return res.json({listaEstoque})
+
+        } catch (error) {
+            res.status(500).json({error: error})
+        }
+    })
 
 
     //Deletar estoque para o Produto pelo id

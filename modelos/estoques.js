@@ -20,7 +20,11 @@ const Estoque = database.define('estoques', {
 
 Estoque.belongsTo(Produto, {
     constraint: true,
-    foreignKey: 'idProduto'
+    foreignKey: 'idProduto',
+    onDelete: "CASCADE", 
+    onUpdate: "CASCADE"
+    
+
 
 })
 
