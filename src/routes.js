@@ -100,7 +100,6 @@ const res = require('express/lib/response');
             
         
     }) 
-
        
     //Listar Todas as Categorias OK
     routes.get('/listarcategorias', async (req,res) => {
@@ -253,11 +252,9 @@ const res = require('express/lib/response');
                      
         try {
            
-        const listaEstoque = await Estoque.findAll({
-            where: { idProduto: id,
-            }})
+        const listaEstoque = await Estoque.findAll({ where: { idProduto: id,}})
 
-        return res.json({listarProdutosPorId})
+        return res.json({listaEstoque})
 
         } catch (error) {
             res.status(500).json({error: error})
@@ -265,6 +262,21 @@ const res = require('express/lib/response');
 
     })
 
+    //Editar estoque para produto pelo id
+
+
+    //Deletar estoque para o Produto pelo id
+    routes.delete('/deletarestoque', async (req,res) => {
+
+        const {id} = req.body       
+       
+        if (!id) {
+            res.status(422).json({error: 'o id é obrigatório'})
+            
+        } 
+        res.status(501).json({error: 'Não se pode deletar um estoque'})
+         
+    })           
 
    
 
