@@ -239,8 +239,7 @@ const res = require('express/lib/response');
         
     }) 
 
-   
-    //Lista o Estoque para o Produto pelo Id
+       //Lista o Estoque para o Produto pelo Id
     routes.get('/listarestoqueparaproduto', async (req,res) => {
        
         const {id} = req.body

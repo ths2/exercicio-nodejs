@@ -4,9 +4,9 @@
 (async () => {
     const readline = require('readline-sync');
     const databasepg = require('./bdtabspg');
-    const Categoria = require('./modelos/categoriaspg');
-    const Produto = require ('./modelos/produtospg');
-    const Estoque = require ('./modelos/estoquespg');
+    const Categoria = require('./modelospg/categoriaspg');
+    const Produto = require ('./modelospg/produtospg');
+    const Estoque = require ('./modelospg/estoquespg');
     
     await databasepg.sync();
 
