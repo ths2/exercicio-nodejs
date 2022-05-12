@@ -3,10 +3,10 @@
 
 const Sequelize = require('sequelize');
 const databasepg = require('../bdtabspg');
-const Categoria = require('./categorias')
+const CategoriaPg = require('./categoriaspg')
 
 //modela a tabela
-const Produto = databasepg.define('produtos', {
+const ProdutoPg = databasepg.define('produtospg', {
     codigo: {
         type: Sequelize.STRING,
     },
@@ -24,20 +24,20 @@ const Produto = databasepg.define('produtos', {
     }
 });
 //cria a chave estrangeira do produto(chave estrangeira idCategoria pertence a id da tabela categoria)
-Produto.belongsTo(Categoria, {
+ProdutoPg.belongsTo(CategoriaPg, {
     constraint: true,
     foreignKey: 'idCategoria'
 
 })
 // chave estrangeira idCategoria tem muitos produtos da mesma categoria
-Categoria.hasMany(Produto, {
+CategoriaPg.hasMany(ProdutoPg, {
     constraint: true,
     foreignkey: 'idCategoria'
     
 })
 
 
-module.exports = Produto;
+module.exports = ProdutoPg;
 
 
 //categorias.sync({force: true});

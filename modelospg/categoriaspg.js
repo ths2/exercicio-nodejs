@@ -4,7 +4,7 @@
 const Sequelize = require('sequelize');
 const databasepg = require('../bdtabspg');
 
-const Categoria = databasepg.define('categorias', {
+const CategoriaPg = databasepg.define('categoriaspg', {
     codigo: {
         type: Sequelize.STRING,
     },
@@ -16,4 +16,4 @@ const Categoria = databasepg.define('categorias', {
     }
 });
 
-module.exports = Categoria;
+module.exports = CategoriaPg;

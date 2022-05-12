@@ -2,10 +2,10 @@
 //Modelo Estoque Tabela banco de dados postgre
 
 const Sequelize = require('sequelize');
-const Produto = require('./produtos');
+const ProdutoPg = require('../modelospg/produtospg');
 const databasepg = require('../bdtabspg');
 
-const Estoque = databasepg.define('estoques', {
+const EstoquePg = databasepg.define('estoquespg', {
     
     quantidade: {
         type: Sequelize.INTEGER,
@@ -18,11 +18,11 @@ const Estoque = databasepg.define('estoques', {
     }
 });
 
-Estoque.belongsTo(Produto, {
+EstoquePg.belongsTo(ProdutoPg, {
     constraint: true,
     foreignKey: 'idProduto'
 
 })
 
 
-module.exports = Estoque;
+module.exports = EstoquePg;

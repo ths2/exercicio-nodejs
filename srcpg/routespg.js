@@ -1,24 +1,47 @@
-
 const express = require ('express');
-const routes = express.Router();
+const routespg = express.Router();
 const Sequelize = require('sequelize');
-const database = require('../bdtabs');
-const Categoria = require('../modelos/categorias');
-const Produto = require ('../modelos/produtos');
-const Estoque = require ('../modelos/estoques');
+const databasepg = require('../bdtabspg');
+const CategoriaPg = require('../modelospg/categoriaspg');
+const ProdutoPg = require ('../modelospg/produtospg');
+const EstoquePg = require ('../modelospg/estoquespg');
 const res = require('express/lib/response');
 
 
 //Inicio da API
 
 (async () => {
-   
+
+    //Inserir categoria OK
+    routespg.post('/inserircategoria', async (req,res) => {
+
+        const {codigo, titulo, status} = req.body
+                
+       
+        if (!codigo) {
+            res.status(422).json({error: 'o codigo é obrigatório'})
+        }
+        const novaCategoria = req.body
+      
+        try {
+    
+            await CategoriaPg.create(novaCategoria);
+            res.status(201).json({mensagem: 'Categoria criada'})
+            console.log(novaCategoria)
+                        
+        } catch (error) {
+            res.status(500).json({error: error})
+        }  
+        
+           
+    }) 
+   /*
     //Listar todos os Produtos OK
     routes.get('/listarprodutos', async (req,res) => {
         const listaProdutos = await Produto.findAll();
         return res.json({listaProdutos})
     })
-
+ 
 
     //Listar Produtos por id OK
     routes.get('/listarprodutosporid', async (req,res) => {
@@ -164,29 +187,7 @@ const res = require('express/lib/response');
            
     }) 
 
-    //Inserir categoria OK
-    routes.post('/inserircategoria', async (req,res) => {
-
-        const {codigo, titulo, status} = req.body
-                
-       
-        if (!codigo) {
-            res.status(422).json({error: 'o codigo é obrigatório'})
-        }
-        const novaCategoria = req.body
-      
-        try {
     
-            await Categoria.create(novaCategoria);
-            res.status(201).json({mensagem: 'Categoria criada'})
-                        
-        } catch (error) {
-            res.status(500).json({error: error})
-        }  
-        
-           
-    }) 
-
     //Editar uma categoria OK
     routes.patch('/editarcategoria', async (req,res) => {
 
@@ -301,75 +302,9 @@ const res = require('express/lib/response');
          
     })           
 
-   
+   */
 
 })();
 
 
-module.exports = routes;
-
-/*
-//Rota lista categorias
-const listaCategorias = await Categoria.findAll();
-routes.get('/', async (req,res) => {
-    return res.json({listaCategorias})
-
-})
-*/
-
-/*
-//rota listar produto
-//
-
-*/
-
-/*
-// Listar Estoque
-const listaEstoque = await Estoque.findAll();
-routes.get('/', async (req,res) => {
-    return res.json({listaEstoque})
-})    
-*/
-
-/*
-//Editar uma categoria nao funciona ainda
-const editarCategoria = await Categoria.findByPk();
-routes.patch('/', async (req,res)) => {
-    return res.jason({editarCategoria})
-}
-*/
-
-   //inserir Produto Funciona
-   /*
-    routes.post('/inserirproduto', async (req,res) => {
-
-        const {codigo, nome, descricao, valor, status } = req.body    
-    
-        if (!codigo) {
-            res.status(422).json({error: 'o codigo é obrigatório'})
-        }
-        const produto = {
-            codigo,
-            nome,
-            descricao, 
-            valor,
-            status,
-        }
-           
-        try {
-    
-            await Produto.create(produto);
-            res.status(201).json({mensagem: 'produto criado'})
-    
-        } catch (error) {
-            res.status(500).json({error: error})
-        }    
-    
-    })
-    */  
-
-//adicionar um produto Nao funciona?
-/*
-
-*/
-
+module.exports = routespg;
