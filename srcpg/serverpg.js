@@ -20,6 +20,8 @@
         
     app2.listen(8080, () => {
         console.log("servidor rodando na porta 8080");
+
+        //Enviar endpoints para o outro servidor e atualizar tabela
         
         //             /1 para rodar de 1 em um minuto
         //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))

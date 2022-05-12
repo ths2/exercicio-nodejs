@@ -35,16 +35,16 @@ const res = require('express/lib/response');
         
            
     }) 
-   /*
+   
     //Listar todos os Produtos OK
-    routes.get('/listarprodutos', async (req,res) => {
+    routespg.get('/listarprodutos', async (req,res) => {
         const listaProdutos = await Produto.findAll();
         return res.json({listaProdutos})
     })
  
 
     //Listar Produtos por id OK
-    routes.get('/listarprodutosporid', async (req,res) => {
+    routespg.get('/listarprodutosporid', async (req,res) => {
        
         const {id} = req.body
 
@@ -64,7 +64,7 @@ const res = require('express/lib/response');
     })
 
     //Editar produto por id OK
-    routes.patch('/editarprodutoporid', async (req,res) => {
+    routespg.patch('/editarprodutoporid', async (req,res) => {
 
         const {id} = req.body.idProduto
         const {codigoProd, nomeProd, descricaoProd, valorProd, statusProd} = req.body.produto
@@ -95,7 +95,7 @@ const res = require('express/lib/response');
     }) 
 
     //Deletar um produto e seus estoque OK
-    routes.delete('/deletarprodutoeestoque', async (req,res) => {
+    routespg.delete('/deletarprodutoeestoque', async (req,res) => {
 
         const {id} = req.body       
        
@@ -125,7 +125,7 @@ const res = require('express/lib/response');
     }) 
        
     //Listar Todas as Categorias OK
-    routes.get('/listarcategorias', async (req,res) => {
+    routespg.get('/listarcategorias', async (req,res) => {
         const listaCategorias = await Categoria.findAll();
         return res.json({listaCategorias})
 
@@ -133,7 +133,7 @@ const res = require('express/lib/response');
     }) 
 
     //Listar Categorias por id OK
-    routes.get('/listarcategoriasporid', async (req,res) => {
+    routespg.get('/listarcategoriasporid', async (req,res) => {
        
         const {id} = req.body
 
@@ -154,7 +154,7 @@ const res = require('express/lib/response');
 
 
     //Inserir produto e estoque para o Produto OBS. Status do estoque fica como NULL
-    routes.post('/inserirproduto', async (req,res) => {
+    routespg.post('/inserirproduto', async (req,res) => {
 
         console.log(req.body.estoque)
         const {idCategoria, codigo, nome, descricao, valor, status} = req.body.produto
@@ -187,9 +187,8 @@ const res = require('express/lib/response');
            
     }) 
 
-    
     //Editar uma categoria OK
-    routes.patch('/editarcategoria', async (req,res) => {
+    routespg.patch('/editarcategoria', async (req,res) => {
 
         const {id} = req.body.idCategoria
         const {codigoCat, tituloCat, statusCat} = req.body.categoria
@@ -219,7 +218,7 @@ const res = require('express/lib/response');
     }) 
 
     //Deletar uma categoria por id OK
-    routes.delete('/deletarcategoria', async (req,res) => {
+    routespg.delete('/deletarcategoria', async (req,res) => {
 
         const {id} = req.body       
        
@@ -243,7 +242,7 @@ const res = require('express/lib/response');
     }) 
 
     //Lista o Estoque para o Produto pelo Id
-    routes.get('/listarestoqueparaproduto', async (req,res) => {
+    routespg.get('/listarestoqueparaproduto', async (req,res) => {
        
         const {id} = req.body
 
@@ -263,7 +262,7 @@ const res = require('express/lib/response');
     })
 
     //Editar estoque para produto pelo id
-    routes.get('/editarestoqueparaproduto', async (req,res) => {
+    routespg.get('/editarestoqueparaproduto', async (req,res) => {
        
         const {id} = req.body.idProduto
         const {quantidade, reserva, status} = req.body.estoque
@@ -290,7 +289,7 @@ const res = require('express/lib/response');
 
 
     //Deletar estoque para o Produto pelo id
-    routes.delete('/deletarestoque', async (req,res) => {
+    routespg.delete('/deletarestoque', async (req,res) => {
 
         const {id} = req.body       
        
@@ -302,7 +301,7 @@ const res = require('express/lib/response');
          
     })           
 
-   */
+   
 
 })();
 
