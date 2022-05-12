@@ -5,12 +5,12 @@ const Sequelize = require('sequelize');
 const Categoria = require('../modelos/categorias');
 const Produto = require ('../modelos/produtos');
 const Estoque = require ('../modelos/estoques');
+const cron = require ('node-cron');
 
-
+//cria tabelas se não existir
 //await database.sync();
 
 const app = express();
-
 
 app.use( 
     express.urlencoded({
@@ -22,7 +22,17 @@ app.use(
 //app.listen(8080);
 
 //Porta MySql
-app.listen(3333);
+//roda aplicação cron na porta 3333
+app.listen(3333, () => {
+    console.log("servidor rodando na porta 3333");
+    
+    cron.schedule("* * * * * *", () => console.log("o cron está rodando"))
+    
+
+})
+
+
+
 
 app.use(express.json());
 

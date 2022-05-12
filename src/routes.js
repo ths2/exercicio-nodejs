@@ -12,13 +12,93 @@ const res = require('express/lib/response');
 //Inicio da API
 
 (async () => {
-   
+
+    //Listar Todas as Categorias OK
+    routes.get('/listarcategorias', async (req,res) => {
+            const listaCategorias = await Categoria.findAll();
+            return res.json({listaCategorias})
+    
+    
+    }) 
+    
+    //Listar Categorias por id OK
+    routes.get('/listarcategoriasporid', async (req,res) => {
+           
+            const {id} = req.body
+    
+            if (!id) {
+                res.status(422).json({error: 'o id é obrigatório'})
+            }
+                         
+            try {
+               
+            const listarCategoriasPorId = await Categoria.findByPk(id)
+            return res.json({listarCategoriasPorId})
+    
+            } catch (error) {
+                res.status(500).json({error: error})
+            }
+    
+    })
+    
+     //Inserir categoria OK
+     routes.post('/inserircategoria', async (req,res) => {
+    
+            const {codigo, titulo, status} = req.body
+                    
+           
+            if (!codigo) {
+                res.status(422).json({error: 'o codigo é obrigatório'})
+            }
+            const novaCategoria = req.body
+          
+            try {
+        
+                await Categoria.create(novaCategoria);
+                res.status(201).json({mensagem: 'Categoria criada'})
+                            
+            } catch (error) {
+                res.status(500).json({error: error})
+            }  
+            
+               
+    }) 
+    
+    //Editar uma categoria por id OK
+        routes.patch('/editarcategoria', async (req,res) => {
+    
+            const {id} = req.body.idCategoria
+            const {codigoCat, tituloCat, statusCat} = req.body.categoria
+                    
+           
+            if (!codigoCat) {
+                res.status(422).json({error: 'o codigo é obrigatório'})
+            }         
+          
+            try {
+        
+                const editaCategoria = await Categoria.findByPk(id)
+                console.log(editaCategoria)
+    
+                editaCategoria.codigo = codigoCat,
+                editaCategoria.titulo = tituloCat,
+                editaCategoria.status = statusCat
+                            
+                            
+                await editaCategoria.save(editaCategoria);
+                res.status(201).json({mensagem: 'Categoria editada'})
+                            
+            } catch (error) {
+                res.status(500).json({error: error})
+            }  
+                   
+    }) 
+       
     //Listar todos os Produtos OK
     routes.get('/listarprodutos', async (req,res) => {
         const listaProdutos = await Produto.findAll();
         return res.json({listaProdutos})
     })
-
 
     //Listar Produtos por id OK
     routes.get('/listarprodutosporid', async (req,res) => {
@@ -39,96 +119,6 @@ const res = require('express/lib/response');
         }
 
     })
-
-    //Editar produto por id OK
-    routes.patch('/editarprodutoporid', async (req,res) => {
-
-        const {id} = req.body.idProduto
-        const {codigoProd, nomeProd, descricaoProd, valorProd, statusProd} = req.body.produto
-                
-       
-        if (!codigoProd) {
-            res.status(422).json({error: 'o codigo é obrigatório'})
-        }         
-      
-        try {
-    
-            const editaProduto = await Produto.findByPk(id)
-           
-            editaProduto.codigo = codigoProd,
-            editaProduto.nome = nomeProd,
-            editaProduto.descricao = descricaoProd,
-            editaProduto.valor = valorProd
-            editaProduto.status = statusProd
-                        
-                        
-            await editaProduto.save(editaProduto);
-            res.status(201).json({mensagem: 'Prduto Editado'})
-                        
-        } catch (error) {
-            res.status(500).json({error: error})
-        }  
-               
-    }) 
-
-    //Deletar um produto e seus estoque OK
-    routes.delete('/deletarprodutoeestoque', async (req,res) => {
-
-        const {id} = req.body       
-       
-        if (!id) {
-            res.status(422).json({error: 'o id é obrigatório'})
-        } 
-          
-        try {
-
-            const deletaProduto = await Produto.findByPk(id);
-            const deletaEstoque = await Estoque.findOne({where: { idProduto: id }})
-           
-            console.log(deletaEstoque)
-            await deletaProduto.destroy();
-            await deletaEstoque.destroy();
-            
-            
-                      
-            res.status(201).json({mensagem: 'Produto Deletado'})
-                        
-              
-        }catch (error) {
-            res.status(500).json({error: error})
-        }               
-            
-        
-    }) 
-       
-    //Listar Todas as Categorias OK
-    routes.get('/listarcategorias', async (req,res) => {
-        const listaCategorias = await Categoria.findAll();
-        return res.json({listaCategorias})
-
-
-    }) 
-
-    //Listar Categorias por id OK
-    routes.get('/listarcategoriasporid', async (req,res) => {
-       
-        const {id} = req.body
-
-        if (!id) {
-            res.status(422).json({error: 'o id é obrigatório'})
-        }
-                     
-        try {
-           
-        const listarCategoriasPorId = await Categoria.findByPk(id)
-        return res.json({listarCategoriasPorId})
-
-        } catch (error) {
-            res.status(500).json({error: error})
-        }
-
-    })
-
 
     //Inserir produto e estoque para o Produto OBS. Status do estoque fica como NULL
     routes.post('/inserirproduto', async (req,res) => {
@@ -163,53 +153,31 @@ const res = require('express/lib/response');
         
            
     }) 
-
-    //Inserir categoria OK
-    routes.post('/inserircategoria', async (req,res) => {
-
-        const {codigo, titulo, status} = req.body
-                
-       
-        if (!codigo) {
-            res.status(422).json({error: 'o codigo é obrigatório'})
-        }
-        const novaCategoria = req.body
-      
-        try {
     
-            await Categoria.create(novaCategoria);
-            res.status(201).json({mensagem: 'Categoria criada'})
-                        
-        } catch (error) {
-            res.status(500).json({error: error})
-        }  
-        
-           
-    }) 
+    //Editar produto por id OK
+    routes.patch('/editarprodutoporid', async (req,res) => {
 
-    //Editar uma categoria OK
-    routes.patch('/editarcategoria', async (req,res) => {
-
-        const {id} = req.body.idCategoria
-        const {codigoCat, tituloCat, statusCat} = req.body.categoria
+        const {id} = req.body.idProduto
+        const {codigoProd, nomeProd, descricaoProd, valorProd, statusProd} = req.body.produto
                 
        
-        if (!codigoCat) {
+        if (!codigoProd) {
             res.status(422).json({error: 'o codigo é obrigatório'})
         }         
       
         try {
     
-            const editaCategoria = await Categoria.findByPk(id)
-            console.log(editaCategoria)
-
-            editaCategoria.codigo = codigoCat,
-            editaCategoria.titulo = tituloCat,
-            editaCategoria.status = statusCat
+            const editaProduto = await Produto.findByPk(id)
+           
+            editaProduto.codigo = codigoProd,
+            editaProduto.nome = nomeProd,
+            editaProduto.descricao = descricaoProd,
+            editaProduto.valor = valorProd
+            editaProduto.status = statusProd
                         
                         
-            await editaCategoria.save(editaCategoria);
-            res.status(201).json({mensagem: 'Categoria editada'})
+            await editaProduto.save(editaProduto);
+            res.status(201).json({mensagem: 'Prduto Editado'})
                         
         } catch (error) {
             res.status(500).json({error: error})
@@ -217,6 +185,36 @@ const res = require('express/lib/response');
                
     }) 
 
+    //Deletar um produto e seu estoque OK
+    routes.delete('/deletarprodutoeestoque', async (req,res) => {
+
+        const {id} = req.body       
+       
+        if (!id) {
+            res.status(422).json({error: 'o id é obrigatório'})
+        } 
+          
+        try {
+
+            const deletaProduto = await Produto.findByPk(id);
+            const deletaEstoque = await Estoque.findOne({where: { idProduto: id }})
+           
+            console.log(deletaEstoque)
+            await deletaProduto.destroy();
+            await deletaEstoque.destroy();
+            
+            
+                      
+            res.status(201).json({mensagem: 'Produto Deletado'})
+                        
+              
+        }catch (error) {
+            res.status(500).json({error: error})
+        }               
+            
+        
+    }) 
+       
     //Deletar uma categoria por id OK
     routes.delete('/deletarcategoria', async (req,res) => {
 
@@ -241,6 +239,7 @@ const res = require('express/lib/response');
         
     }) 
 
+   
     //Lista o Estoque para o Produto pelo Id
     routes.get('/listarestoqueparaproduto', async (req,res) => {
        
@@ -287,7 +286,6 @@ const res = require('express/lib/response');
         }
     })
 
-
     //Deletar estoque para o Produto pelo id
     routes.delete('/deletarestoque', async (req,res) => {
 
@@ -300,76 +298,10 @@ const res = require('express/lib/response');
         res.status(501).json({error: 'Não se pode deletar um estoque'})
          
     })           
-
-   
+  
 
 })();
 
 
 module.exports = routes;
-
-/*
-//Rota lista categorias
-const listaCategorias = await Categoria.findAll();
-routes.get('/', async (req,res) => {
-    return res.json({listaCategorias})
-
-})
-*/
-
-/*
-//rota listar produto
-//
-
-*/
-
-/*
-// Listar Estoque
-const listaEstoque = await Estoque.findAll();
-routes.get('/', async (req,res) => {
-    return res.json({listaEstoque})
-})    
-*/
-
-/*
-//Editar uma categoria nao funciona ainda
-const editarCategoria = await Categoria.findByPk();
-routes.patch('/', async (req,res)) => {
-    return res.jason({editarCategoria})
-}
-*/
-
-   //inserir Produto Funciona
-   /*
-    routes.post('/inserirproduto', async (req,res) => {
-
-        const {codigo, nome, descricao, valor, status } = req.body    
-    
-        if (!codigo) {
-            res.status(422).json({error: 'o codigo é obrigatório'})
-        }
-        const produto = {
-            codigo,
-            nome,
-            descricao, 
-            valor,
-            status,
-        }
-           
-        try {
-    
-            await Produto.create(produto);
-            res.status(201).json({mensagem: 'produto criado'})
-    
-        } catch (error) {
-            res.status(500).json({error: error})
-        }    
-    
-    })
-    */  
-
-//adicionar um produto Nao funciona?
-/*
-
-*/
 
