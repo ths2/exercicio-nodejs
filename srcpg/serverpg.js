@@ -28,7 +28,7 @@
        cron.schedule("1 * * * * * ", () => 
        
        fetch("localhost:3333/listarcategorias")
-       .then((resposta) => console.log(resposta))) ///código restante
+       .then((resposta) => console.log(resposta))); ///código restante
        
        
     
