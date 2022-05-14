@@ -7,10 +7,6 @@ const Categoria = require('../modelos/categorias');
 const Produto = require ('../modelos/produtos');
 const Estoque = require ('../modelos/estoques');
 const cron = require ('node-cron');
-const CategoriaPg = require('../modelospg/categoriaspg');
-const ProdutoPg = require ('../modelospg/produtospg');
-const EstoquePg = require ('../modelospg/estoquespg');
-
 
 
 //cria tabelas se não existir
@@ -27,16 +23,6 @@ app.use(
 )
 app.use(express.json());
 
-app.listen(8080, () => {
-
-    console.log("servidor rodando na porta 8080");
-    
-    //             /1 para rodar de 1 em um minuto
-    //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
-
-    app.use(routespg);
-   
-})
 
 app.listen(3333, () => {
 

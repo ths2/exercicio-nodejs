@@ -6,7 +6,7 @@
     const ProdutoPg = require ('../modelospg/produtospg');
     const EstoquePg = require ('../modelospg/estoquespg');
     const databasepg = require('../bdtabspg');
-    
+    const cron = require ('node-cron');
     
     const app2 = express();
     await databasepg.sync(); 
@@ -25,7 +25,10 @@
         //Enviar endpoints para o outro servidor e atualizar tabela
         
         //              /1 para rodar de 1 em um minuto
-       cron.schedule("/1 * * * * * ", () => fetch("url")) ///código restante
+       cron.schedule("1 * * * * * ", () => 
+       
+       fetch("localhost:3333/listarcategorias")
+       .then((resposta) => console.log(resposta))) ///código restante
        
        
     
