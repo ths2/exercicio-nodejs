@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('exerciciopg', 'postgres', "Thomaz123", {
     host: 'localhost',
     dialect: 'postgres',
+    
         
 });
 

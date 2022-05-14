@@ -1,11 +1,17 @@
 (async () => {
 const express = require ('express');
+const routespg = require ('./routes');
 const routes = require ('./routes');
 const Sequelize = require('sequelize');
 const Categoria = require('../modelos/categorias');
 const Produto = require ('../modelos/produtos');
 const Estoque = require ('../modelos/estoques');
 const cron = require ('node-cron');
+const CategoriaPg = require('../modelospg/categoriaspg');
+const ProdutoPg = require ('../modelospg/produtospg');
+const EstoquePg = require ('../modelospg/estoquespg');
+
+
 
 //cria tabelas se não existir
 //await database.sync();
@@ -16,30 +22,69 @@ app.use(
     express.urlencoded({
         extended: true,
     }),
+
+
 )
+app.use(express.json());
+
+app.listen(8080, () => {
+
+    console.log("servidor rodando na porta 8080");
+    
+    //             /1 para rodar de 1 em um minuto
+    //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
+
+    app.use(routespg);
+   
+})
+
+app.listen(3333, () => {
+
+    console.log("servidor rodando na porta 3333");
+
+    
+    //             /1 para rodar de 1 em um minuto
+    //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
+    app.use(routes);
+   
+})
+
+
+
+
+
+
+
+
+
+//codigo restante
+
+})();
+
+
+/*app.listen(8080, () => {
+    console.log("servidor rodando na porta 8080");
+    
+    //             /1 para rodar de 1 em um minuto
+    //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
+    app.use(routespg)
+
+})
+*/
+
 
 //Porta Postgree
 //app.listen(8080);
 
 //Porta MySql
 //roda aplicação cron na porta 3333
-app.listen(3333, () => {
-    console.log("servidor rodando na porta 3333");
-    
-    //             /1 para rodar de 1 em um minuto
-    //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
+ /*
+app.listen(8080, () => {
 
-})
-
-app.use(express.json());
-
-
-app.use(routes);
-
-//codigo restante
-
-})();
-
+    console.log("servidor rodando na porta 8080");
+    //Salvar dados dos endpoints
+   })  
+*/
 
 /*
 

@@ -6,6 +6,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('exercicio', 'root', 'Thomaz123', {
     host: 'localhost',
     dialect: 'mysql',
+   
         
 });
 
