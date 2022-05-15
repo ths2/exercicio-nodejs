@@ -126,7 +126,7 @@ const res = require('express/lib/response');
        
     //Listar Todas as Categorias OK
     routespg.get('/listarcategorias', async (req,res) => {
-        const listaCategorias = await Categoria.findAll();
+        const listaCategorias = await CategoriaPg.findAll();
         return res.json({listaCategorias})
 
 
@@ -143,7 +143,7 @@ const res = require('express/lib/response');
                      
         try {
            
-        const listarCategoriasPorId = await Categoria.findByPk(id)
+        const listarCategoriasPorId = await CategoriaPg.findByPk(id)
         return res.json({listarCategoriasPorId})
 
         } catch (error) {
@@ -167,7 +167,7 @@ const res = require('express/lib/response');
               
         try {
     
-            const produtoCriado = await Produto.create(novoProduto);
+            const produtoCriado = await ProdutoPg.create(novoProduto);
             console.log(produtoCriado.id);
             res.status(201).json({mensagem: 'produto criado'})
     
@@ -178,7 +178,7 @@ const res = require('express/lib/response');
                 idProduto: produtoCriado.id
             }
 
-            await Estoque.create(novoEstoque);
+            await EstoquePg.create(novoEstoque);
         
         } catch (error) {
             res.status(500).json({error: error})
@@ -200,7 +200,7 @@ const res = require('express/lib/response');
       
         try {
     
-            const editaCategoria = await Categoria.findByPk(id)
+            const editaCategoria = await CategoriaPg.findByPk(id)
             console.log(editaCategoria)
 
             editaCategoria.codigo = codigoCat,
@@ -228,7 +228,7 @@ const res = require('express/lib/response');
           
         try {
 
-            const deletaCategoria = await Categoria.findByPk(id);
+            const deletaCategoria = await CategoriaPg.findByPk(id);
             await deletaCategoria.destroy();
                       
             res.status(201).json({mensagem: 'Categoria Deletada'})
@@ -252,7 +252,7 @@ const res = require('express/lib/response');
                      
         try {
            
-        const listaEstoque = await Estoque.findAll({ where: { idProduto: id,}})
+        const listaEstoque = await EstoquePg.findAll({ where: { idProduto: id,}})
         return res.json({listaEstoque})
 
         } catch (error) {
@@ -273,7 +273,7 @@ const res = require('express/lib/response');
                      
         try {
          
-        const listaEstoque = await Estoque.findAll({ where: { idProduto: id,}})
+        const listaEstoque = await EstoquePg.findAll({ where: { idProduto: id,}})
         
         listaEstoque.quantidade = quantidade,
         listaEstoque.reserva = reserva,

@@ -27,20 +27,15 @@ app.use(express.json());
 app.listen(3333, () => {
 
     console.log("servidor rodando na porta 3333");
+    app.use(routes);
+    
 
     
     //             /1 para rodar de 1 em um minuto
     //cron.schedule("* * * * * * ", () => console.log("o cron está rodando"))
-    app.use(routes);
+    
    
 })
-
-
-
-
-
-
-
 
 
 //codigo restante
