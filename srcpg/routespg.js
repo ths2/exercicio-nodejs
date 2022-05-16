@@ -127,6 +127,16 @@ const res = require('express/lib/response');
     //Listar Todas as Categorias OK
     routespg.get('/listarcategorias', async (req,res) => {
         const listaCategorias = await CategoriaPg.findAll();
+        
+        
+        const {id} = req.headers;
+
+        if (id) {
+            console.log('---- RECBENDO JSON POSTGRESS --- ')
+            console.log('---- AI LEPS --- ')
+        }
+        
+       
         return res.json({listaCategorias})
 
 
@@ -135,7 +145,8 @@ const res = require('express/lib/response');
     //Listar Categorias por id OK
     routespg.get('/listarcategoriasporid', async (req,res) => {
        
-        const {id} = req.body
+        const {id} = req.body;
+            
 
         if (!id) {
             res.status(422).json({error: 'o id é obrigatório'})
