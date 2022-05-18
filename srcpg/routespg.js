@@ -14,7 +14,7 @@ const res = require('express/lib/response');
 
     //Inserir categoria OK
     routespg.post('/inserircategoria', async (req,res) => {
-
+        console.log('---- RECEBENDO CATEGORIA DO MYSQL ------')
         const {codigo, titulo, status} = req.body
                 
        
